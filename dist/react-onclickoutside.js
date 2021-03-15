@@ -313,8 +313,16 @@ function onClickOutsideHOC(WrappedComponent, config) {
       this.enableOnClickOutside();
     };
 
-    _proto.componentDidUpdate = function componentDidUpdate() {
+    _proto.componentDidUpdate = function componentDidUpdate(prevProps) {
       this.componentNode = this.__getComponentNode();
+
+      if (prevProps.disableOnClickOutside !== this.props.disableOnClickOutside) {
+        if (this.props.disableOnClickOutside) {
+          this.disableOnClickOutside();
+        } else {
+          this.enableOnClickOutside();
+        }
+      }
     };
     /**
      * Remove all document's event listeners for this component
